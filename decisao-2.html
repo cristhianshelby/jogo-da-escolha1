@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 2A - Resultado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚡ Resultado</h1>
+            <div id="phase-indicator">📍 Decisão 3</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">⚡ Você sobreviveu! Mas a jornada continua... O que fazer agora?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn danger" onclick="irPara('3')">🏰 Seguir para o castelo</button>
+                <button class="choice-btn success" onclick="irPara('4')">🏕️ Descansar</button>
+                <button class="choice-btn magic" onclick="irPara('5')">🔮 Explorar mais</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/S0n9LpQ.jpg" alt="Continuação">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+
+        function irPara(opcao) {
+            addDecision('2a');
+            if (opcao === '3') {
+                window.location.href = 'decisao-3.html';
+            } else if (opcao === '4') {
+                modifyHealth(20);
+                window.location.href = 'decisao-4.html';
+            } else {
+                addItem('Pergaminho');
+                window.location.href = 'decisao-5.html';
+            }
+        }
+    </script>
+</body>
+</html>

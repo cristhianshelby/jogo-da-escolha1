@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 4B - Arma Lendária</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(241, 196, 15, 0.3); }
+        #story-box { border-left-color: #f1c40f; }
+        header h1 { color: #f1c40f; }
+        .atributos {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            color: #dfe6e9;
+            font-size: 0.9rem;
+        }
+        .forca { color: #e74c3c; }
+        .magia { color: #9b59b6; }
+        .diplomacia { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚔️ A Arma Lendária</h1>
+            <div id="phase-indicator">📍 Decisão 4B</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="atributos">
+                <span class="forca">⚔️ Força: <span id="forcaDisplay">0</span></span>
+                <span class="magia">🔮 Magia: <span id="magiaDisplay">0</span></span>
+                <span class="diplomacia">🤝 Diplomacia: <span id="diplomaciaDisplay">0</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">⚔️ Você viaja para as montanhas em busca da Espada Lendária. Dizem que ela foi forjada por deuses."Para provar que é digno, você deve passar por três provações", diz o guardião.Você está pronto para os desafios?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn danger" onclick="escolher('5a')">🔥 Enfrentar o guardião (+Força)</button>
+                <button class="choice-btn magic" onclick="escolher('5b')">🧙 Decifrar o enigma (+Magia)</button>
+                <button class="choice-btn success" onclick="escolher('5c')">🕊️ Mostrar compaixão (+Diplomacia)</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/w9Hjv6K.jpg" alt="Arma Lendária">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-3a.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        const s = getState();
+        document.getElementById('forcaDisplay').textContent = s.forca || 0;
+        document.getElementById('magiaDisplay').textContent = s.magia || 0;
+        document.getElementById('diplomaciaDisplay').textContent = s.diplomacia || 0;
+
+        function escolher(opcao) {
+            addDecision('4b');
+            if (opcao === '5a') {
+                addForca(15);
+                const d = randomInt(15, 35);
+                modifyHealth(-d);
+                if (getState().health <= 0) {
+                    const s2 = getState();
+                    s2.gameOver = true;
+                    saveState(s2);
+                    window.location.href = 'decisao-gameover.html';
+                } else {
+                    addItem('Espada Lendária');
+                    window.location.href = 'decisao-4a.html';
+                }
+            } else if (opcao === '5b') {
+                addMagia(15);
+                const luck = randomInt(1, 2);
+                if (luck === 1) {
+                    modifyHealth(15);
+                    addItem('Espada Lendária');
+                    window.location.href = 'decisao-4a.html';
+                } else {
+                    modifyHealth(-20);
+                    window.location.href = 'decisao-4a.html';
+                }
+            } else {
+                addDiplomacia(15);
+                addItem('Espada Lendária');
+                addItem('Bênção dos Deuses');
+                modifyHealth(20);
+                window.location.href = 'decisao-4a.html';
+            }
+        }
+    </script>
+</body>
+</html>

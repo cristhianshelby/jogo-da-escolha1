@@ -1,0 +1,19 @@
+jogo-narrativo/
+│
+├── index.html (Menu)
+├── style.css (CSS Global)
+├── script.js (JS Global)
+│
+├── decisao-1.html (Escolha 1 - Floresta)
+├── decisao-2.html (Escolha 2 - Rio)
+├──  (Escolha 3 - Montanha)
+├── decisao-1decisao-4.htmla.html (Floresta - Desviar)
+├── decisao-1b.html (Floresta - Escudo)
+├── decisao-1c.html (Floresta - Correr)
+├── decisao-2a.html (Rio - Pescar)
+├── decisao-2b.html (Rio - Ponte)
+├── decisao-2c.html (Rio - Barco)
+├── decisao-3a.html (Montanha - Caverna)
+├── decisao-3b.html (Montanha - Escalar)
+├── decisao-3c.html (Montanha - Acampar)
+└── ... e assim por diante

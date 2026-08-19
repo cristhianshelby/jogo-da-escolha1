@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Batalha Final</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(231, 76, 60, 0.5); }
+        #story-box { border-left-color: #e74c3c; border-width: 4px; }
+        header h1 { color: #e74c3c; text-shadow: 0 0 30px rgba(231,76,60,0.3); }
+        .atributos {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            color: #dfe6e9;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .forca { color: #e74c3c; }
+        .magia { color: #9b59b6; }
+        .diplomacia { color: #2ecc71; }
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .legenda .boa { color: #2ecc71; }
+        .legenda .ruim { color: #e74c3c; }
+        .legenda .neutra { color: #f39c12; }
+        .poder-box {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .poder-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .poder-item.heroi {
+            border: 2px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+        .poder-item.dragao {
+            border: 2px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        .poder-item.pontos {
+            border: 2px solid #f1c40f;
+            background: rgba(241, 196, 15, 0.1);
+        }
+        .poder-item .label { font-size: 0.7rem; color: #b2bec3; }
+        .poder-item .valor { font-size: 1.8rem; font-weight: bold; }
+        .poder-item.heroi .valor { color: #2ecc71; }
+        .poder-item.dragao .valor { color: #e74c3c; }
+        .poder-item.pontos .valor { color: #f1c40f; }
+        .opcao-boa { border-left: 4px solid #2ecc71 !important; }
+        .opcao-neutra { border-left: 4px solid #f39c12 !important; }
+        .opcao-ruim { border-left: 4px solid #e74c3c !important; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚔️ A BATALHA FINAL</h1>
+            <div id="phase-indicator">📍 O destino do reino está em suas mãos</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="atributos">
+                <span class="forca">⚔️ Força: <span id="forcaDisplay">0</span></span>
+                <span class="magia">🔮 Magia: <span id="magiaDisplay">0</span></span>
+                <span class="diplomacia">🤝 Diplomacia: <span id="diplomaciaDisplay">0</span></span>
+            </div>
+            <div class="legenda">
+                <span class="boa">✅ Boa (Vitória)</span>
+                <span class="neutra">⚖️ Neutra (Sobrevivência)</span>
+                <span class="ruim">❌ Ruim (Morte)</span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">🐉 O DRAGÃO TE ENCARA COM OLHOS DE FOGO!"Então você é o tal herói? Vamos ver se você é tão forte quanto dizem!"Suas escolhas ao longo da jornada determinarão seu destino...</p>
+            </div>
+
+            <div class="poder-box">
+                <div class="poder-item heroi">
+                    <div class="label">⚔️ SEU PODER</div>
+                    <div class="valor" id="poderHeroi">?</div>
+                </div>
+                <div class="poder-item dragao">
+                    <div class="label">🐉 PODER DO DRAGÃO</div>
+                    <div class="valor" id="poderDragao">?</div>
+                </div>
+                <div class="poder-item pontos">
+                    <div class="label">⭐ PONTUAÇÃO FINAL</div>
+                    <div class="valor" id="pontuacaoFinal">?</div>
+                </div>
+            </div>
+
+            <div id="choices-box">
+                <!-- OPÇÃO BOA: Ataque Estratégico -->
+                <button class="choice-btn danger opcao-boa" onclick="escolher('boa')">
+                    ⚔️ Ataque Estratégico (Força + Sabedoria)
+                </button>
+                
+                <!-- OPÇÃO NEUTRA: Magia Ancestral -->
+                <button class="choice-btn magic opcao-neutra" onclick="escolher('neutra')">
+                    🔮 Magia Ancestral (Equilíbrio)
+                </button>
+                
+                <!-- OPÇÃO RUIM: Ataque Impulsivo -->
+                <button class="choice-btn danger opcao-ruim" onclick="escolher('ruim')">
+                    😤 Ataque Impulsivo (Sem estratégia)
+                </button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/2u9nYHb.jpg" alt="Batalha">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-4a.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        const s = getState();
+        document.getElementById('forcaDisplay').textContent = s.forca || 0;
+        document.getElementById('magiaDisplay').textContent = s.magia || 0;
+        document.getElementById('diplomaciaDisplay').textContent = s.diplomacia || 0;
+
+        // Calcula e mostra o poder e pontuação
+        function calcularPoder() {
+            const state = getState();
+            let poderHeroi = 0;
+            
+            // FORÇA
+            poderHeroi += state.forca || 0;
+            if (hasItem('Armadura Reforçada')) poderHeroi += 15;
+            if (hasItem('Espada Lendária')) poderHeroi += 25;
+            if (hasItem('Estratégia de Batalha')) poderHeroi += 10;
+            if (hasItem('Troféu')) poderHeroi += 5;
+            
+            // MAGIA
+            poderHeroi += state.magia || 0;
+            if (hasItem('Livro de Feitiços')) poderHeroi += 15;
+            if (hasItem('Cristal Mágico')) poderHeroi += 15;
+            if (hasItem('Pergaminho')) poderHeroi += 10;
+            if (hasItem('Poder Mágico')) poderHeroi += 20;
+            
+            // DIPLOMACIA
+            poderHeroi += state.diplomacia || 0;
+            if (hasItem('Diplomacia')) poderHeroi += 15;
+            if (hasItem('Sabedoria')) poderHeroi += 10;
+            if (hasItem('Bênção dos Deuses')) poderHeroi += 20;
+            
+            // ITENS DE CURA
+            if (hasItem('Poção de Cura')) poderHeroi += 10;
+            if (hasItem('Cogumelo')) poderHeroi += 5;
+            
+            // BÔNUS
+            if (hasItem('Mapa do Atalho')) poderHeroi += 10;
+            if (hasItem('Amuleto')) poderHeroi += 10;
+            if (hasItem('Pérola')) poderHeroi += 10;
+            if (hasItem('Fragmento de Dragão')) poderHeroi += 25;
+            
+            let poderDragao = 50 + randomInt(0, 30);
+            
+            // Calcula pontuação final
+            let pontuacao = 0;
+            pontuacao += Math.floor((state.forca || 0) / 10);
+            pontuacao += Math.floor((state.magia || 0) / 10);
+            pontuacao += Math.floor((state.diplomacia || 0) / 10);
+            if (hasItem('Espada Lendária')) pontuacao += 5;
+            if (hasItem('Armadura Reforçada')) pontuacao += 4;
+            if (hasItem('Poder Mágico')) pontuacao += 5;
+            if (hasItem('Diplomacia')) pontuacao += 4;
+            if (hasItem('Bênção dos Deuses')) pontuacao += 5;
+            if (hasItem('Fragmento de Dragão')) pontuacao += 5;
+            if (state.health > 80) pontuacao += 5;
+            else if (state.health > 50) pontuacao += 3;
+            pontuacao += (state.pontosBons || 0) * 2;
+            pontuacao -= (state.pontosRuins || 0) * 2;
+            pontuacao += Math.floor((state.steps || 0) / 3);
+            
+            document.getElementById('poderHeroi').textContent = poderHeroi;
+            document.getElementById('poderDragao').textContent = poderDragao;
+            document.getElementById('pontuacaoFinal').textContent = pontuacao;
+            
+            return { poderHeroi, poderDragao, pontuacao };
+        }
+
+        calcularPoder();
+
+        function escolher(opcao) {
+            addDecision('5a');
+            const state = getState();
+            
+            // Calcula pontuação final
+            let pontuacao = 0;
+            pontuacao += Math.floor((state.forca || 0) / 10);
+            pontuacao += Math.floor((state.magia || 0) / 10);
+            pontuacao += Math.floor((state.diplomacia || 0) / 10);
+            if (hasItem('Espada Lendária')) pontuacao += 5;
+            if (hasItem('Armadura Reforçada')) pontuacao += 4;
+            if (hasItem('Poder Mágico')) pontuacao += 5;
+            if (hasItem('Diplomacia')) pontuacao += 4;
+            if (hasItem('Bênção dos Deuses')) pontuacao += 5;
+            if (hasItem('Fragmento de Dragão')) pontuacao += 5;
+            if (state.health > 80) pontuacao += 5;
+            else if (state.health > 50) pontuacao += 3;
+            pontuacao += (state.pontosBons || 0) * 2;
+            pontuacao -= (state.pontosRuins || 0) * 2;
+            pontuacao += Math.floor((state.steps || 0) / 3);
+            
+            state.pontuacaoFinal = pontuacao;
+            saveState(state);
+            
+            if (opcao === 'boa') {
+                // ESCOLHA BOA - Ganha bônus
+                let bonus = 0;
+                if (hasItem('Espada Lendária')) bonus += 20;
+                if (hasItem('Armadura Reforçada')) bonus += 10;
+                if (hasItem('Estratégia de Batalha')) bonus += 15;
+                
+                const poderTotal = (state.forca || 0) + bonus + 25;
+                const poderDragao = 50 + randomInt(0, 20);
+                
+                state.poderHeroi = poderTotal;
+                state.poderDragao = poderDragao;
+                saveState(state);
+                
+                if (poderTotal >= poderDragao && pontuacao >= 25) {
+                    modifyHealth(30);
+                    window.location.href = 'final-bom.html';
+                } else {
+                    modifyHealth(-10);
+                    window.location.href = 'final-neutro.html';
+                }
+                
+            } else if (opcao === 'neutra') {
+                // ESCOLHA NEUTRA - Equilibrada
+                let bonus = 0;
+                if (hasItem('Livro de Feitiços')) bonus += 15;
+                if (hasItem('Cristal Mágico')) bonus += 10;
+                if (hasItem('Poder Mágico')) bonus += 15;
+                
+                const poderTotal = (state.magia || 0) + bonus + 15;
+                const poderDragao = 55 + randomInt(0, 25);
+                
+                state.poderHeroi = poderTotal;
+                state.poderDragao = poderDragao;
+                saveState(state);
+                
+                if (poderTotal >= poderDragao && pontuacao >= 12) {
+                    modifyHealth(15);
+                    window.location.href = 'final-neutro.html';
+                } else {
+                    modifyHealth(-20);
+                    window.location.href = 'final-ruim.html';
+                }
+                
+            } else {
+                // ESCOLHA RUIM - Perde pontos
+                const poderTotal = (state.forca || 0) - 20;
+                const poderDragao = 65 + randomInt(0, 25);
+                
+                state.poderHeroi = poderTotal;
+                state.poderDragao = poderDragao;
+                saveState(state);
+                
+                modifyHealth(-40);
+                const s2 = getState();
+                s2.gameOver = true;
+                saveState(s2);
+                window.location.href = 'final-ruim.html';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Jornada do Herói</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(255,215,0,0.3); }
+        #story-box { border-left-color: #f1c40f; }
+        header h1 { color: #f1c40f; }
+        .menu-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            border-radius: 15px;
+            border: 2px solid #6c5ce7;
+            background: rgba(108,92,231,0.1);
+            color: #dfe6e9;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .menu-btn:hover { background: rgba(108,92,231,0.3); transform: scale(1.02); }
+        .menu-btn.continue { border-color: #2ecc71; background: rgba(46,204,113,0.1); }
+        .menu-btn.continue:hover { background: rgba(46,204,113,0.3); }
+        .menu-btn.reset { border-color: #e74c3c; background: rgba(231,76,60,0.1); }
+        .menu-btn.reset:hover { background: rgba(231,76,60,0.3); }
+        .game-info { color: #636e72; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-top: 15px; line-height: 1.8; }
+        .game-info span { color: #f1c40f; }
+        .game-info .path { color: #74b9ff; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚔️ A Jornada do Herói</h1>
+            <div id="phase-indicator">🏰 Menu Principal</div>
+        </header>
+        <main>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/S0n9LpQ.jpg" alt="Castelo">
+            </div>
+            <div id="story-box">
+                <p id="story-text">🌟 Cada decisão leva a um novo caminho. Escolha sabiamente!</p>
+            </div>
+            <div class="game-info" id="gameInfo">Nenhuma jornada em andamento.</div>
+            <button class="menu-btn continue" id="continueBtn" style="display:none;">▶️ Continuar</button>
+            <button class="menu-btn" id="newBtn">🆕 Nova Jornada</button>
+            <button class="menu-btn reset" id="resetBtn">🔄 Reiniciar Tudo</button>
+        </main>
+        <footer>
+            <button onclick="window.location.href='decisao-1.html'">🚪 Começar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function updateMenu() {
+            const s = getState();
+            const info = document.getElementById('gameInfo');
+            const cont = document.getElementById('continueBtn');
+            
+            if (s.steps > 0 && !s.gameOver) {
+                cont.style.display = 'block';
+                info.innerHTML = '⚔️ Jornada em andamento!<br>❤️ <span>' + s.health + '</span> | 👣 <span>' + s.steps + '</span> | 🎒 <span>' + s.inventory.length + '</span><br>📌 Decisões: <span>' + s.decisions.join(' → ') + '</span>';
+                cont.onclick = function() { 
+                    const last = s.decisions[s.decisions.length - 1] || 'inicio';
+                    window.location.href = 'decisao-' + last + '.html';
+                };
+            } else if (s.gameOver) {
+                info.innerHTML = '💀 Derrota! 👣 ' + s.steps + ' decisões tomadas';
+                cont.style.display = 'none';
+            } else {
+                info.innerHTML = '🌟 Nenhuma jornada em andamento. Comece agora!';
+                cont.style.display = 'none';
+            }
+        }
+
+        document.getElementById('newBtn').onclick = function() {
+            if (confirm('Começar nova jornada?')) { resetState(); window.location.href = 'decisao-1.html'; }
+        };
+        document.getElementById('resetBtn').onclick = function() {
+            if (confirm('Reiniciar tudo?')) { resetState(); updateMenu(); alert('Reiniciado!'); }
+        };
+
+        document.addEventListener('DOMContentLoaded', updateMenu);
+    </script>
+</body>
+</html>

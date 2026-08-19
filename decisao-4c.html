@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 4C - Mago</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(155, 89, 182, 0.3); }
+        #story-box { border-left-color: #9b59b6; }
+        header h1 { color: #9b59b6; }
+        .atributos {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            color: #dfe6e9;
+            font-size: 0.9rem;
+        }
+        .forca { color: #e74c3c; }
+        .magia { color: #9b59b6; }
+        .diplomacia { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>🧙 O Grande Mago</h1>
+            <div id="phase-indicator">📍 Decisão 4C</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="atributos">
+                <span class="forca">⚔️ Força: <span id="forcaDisplay">0</span></span>
+                <span class="magia">🔮 Magia: <span id="magiaDisplay">0</span></span>
+                <span class="diplomacia">🤝 Diplomacia: <span id="diplomaciaDisplay">0</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">🧙 Você encontra um mago ancião nas montanhas. Ele tem o poder de derrotar o dragão com uma magia ancestral."Mas a magia tem um preço, jovem herói. Você está disposto a pagar?", ele pergunta.Qual preço você está disposto a pagar?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn danger" onclick="escolher('5a')">💔 Sacrificar parte da vida</button>
+                <button class="choice-btn magic" onclick="escolher('5b')">📜 Oferecer seu conhecimento (+Magia)</button>
+                <button class="choice-btn success" onclick="escolher('5c')">🗡️ Entregar sua espada</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/mpYgRjD.jpg" alt="Mago">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-3a.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        const s = getState();
+        document.getElementById('forcaDisplay').textContent = s.forca || 0;
+        document.getElementById('magiaDisplay').textContent = s.magia || 0;
+        document.getElementById('diplomaciaDisplay').textContent = s.diplomacia || 0;
+
+        function escolher(opcao) {
+            addDecision('4c');
+            if (opcao === '5a') {
+                modifyHealth(-20);
+                addItem('Poder Mágico');
+                addMagia(20);
+                if (getState().health <= 0) {
+                    const s2 = getState();
+                    s2.gameOver = true;
+                    saveState(s2);
+                    window.location.href = 'decisao-gameover.html';
+                } else {
+                    window.location.href = 'decisao-4a.html';
+                }
+            } else if (opcao === '5b') {
+                addMagia(20);
+                if (hasItem('Livro de Feitiços') || hasItem('Cristal Mágico')) {
+                    modifyHealth(25);
+                    addItem('Poder Mágico');
+                    window.location.href = 'decisao-4a.html';
+                } else {
+                    modifyHealth(-10);
+                    window.location.href = 'decisao-4a.html';
+                }
+            } else {
+                addMagia(15);
+                if (hasItem('Espada Lendária')) {
+                    removeItem('Espada Lendária');
+                    modifyHealth(30);
+                    addItem('Poder Mágico');
+                    window.location.href = 'decisao-4a.html';
+                } else {
+                    modifyHealth(-10);
+                    window.location.href = 'decisao-4a.html';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

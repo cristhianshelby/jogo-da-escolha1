@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 3C - Taverna</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(241, 196, 15, 0.3); }
+        #story-box { border-left-color: #f1c40f; }
+        header h1 { color: #f1c40f; }
+        .atributos {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            color: #dfe6e9;
+            font-size: 0.9rem;
+        }
+        .forca { color: #e74c3c; }
+        .magia { color: #9b59b6; }
+        .diplomacia { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>🍺 Taverna do Rei</h1>
+            <div id="phase-indicator">📍 Decisão 3C</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="atributos">
+                <span class="forca">⚔️ Força: <span id="forcaDisplay">0</span></span>
+                <span class="magia">🔮 Magia: <span id="magiaDisplay">0</span></span>
+                <span class="diplomacia">🤝 Diplomacia: <span id="diplomaciaDisplay">0</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">🍺 A taverna está cheia de aventureiros. Você ouve histórias incríveis sobre o dragão."Eu conheço um atalho para o covil!", diz um velho aventureiro.Mas ele só conta o segredo em troca de uma bebida.O que você faz?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn success" onclick="escolher('4a')">🍻 Pagar a bebida (+Diplomacia)</button>
+                <button class="choice-btn danger" onclick="escolher('4b')">⚔️ Intimidar o velho (+Força)</button>
+                <button class="choice-btn magic" onclick="escolher('4c')">🧙 Usar magia para convencer (+Magia)</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/S0n9LpQ.jpg" alt="Taverna">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-3.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        const s = getState();
+        document.getElementById('forcaDisplay').textContent = s.forca || 0;
+        document.getElementById('magiaDisplay').textContent = s.magia || 0;
+        document.getElementById('diplomaciaDisplay').textContent = s.diplomacia || 0;
+
+        function escolher(opcao) {
+            addDecision('3c');
+            if (opcao === '4a') {
+                addDiplomacia(10);
+                modifyHealth(20);
+                addItem('Mapa do Atalho');
+                window.location.href = 'decisao-4a.html';
+            } else if (opcao === '4b') {
+                addForca(10);
+                if (hasItem('Armadura Reforçada')) {
+                    modifyHealth(10);
+                    addItem('Mapa do Atalho');
+                } else {
+                    modifyHealth(-15);
+                }
+                window.location.href = 'decisao-4b.html';
+            } else {
+                addMagia(10);
+                if (hasItem('Livro de Feitiços') || hasItem('Cristal Mágico')) {
+                    modifyHealth(10);
+                    addItem('Mapa do Atalho');
+                } else {
+                    modifyHealth(-10);
+                }
+                window.location.href = 'decisao-4c.html';
+            }
+        }
+    </script>
+</body>
+</html>

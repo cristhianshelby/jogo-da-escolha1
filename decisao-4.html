@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descanso</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(46, 204, 113, 0.3); }
+        #story-box { border-left-color: #2ecc71; }
+        header h1 { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>🏕️ Descanso</h1>
+            <div id="phase-indicator">📍 Recuperação</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">🏕️ Você descansou e recuperou energias. Agora está pronto para a batalha final!</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn legendary" onclick="window.location.href='decisao-3.html'">⚔️ Ir para o castelo</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/S0n9LpQ.jpg" alt="Descanso">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        addDecision('4');
+    </script>
+</body>
+</html>

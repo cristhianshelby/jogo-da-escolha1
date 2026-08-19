@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#game-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 750px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 500px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #f0e6d3;
+    font-size: 1.8rem;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+#phase-indicator {
+    color: #a29bfe;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+#status-bar {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 12px;
+    color: #e0d6c8;
+    font-size: 0.9rem;
+    font-weight: bold;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#health {
+    color: #4caf50;
+    transition: all 0.3s ease;
+}
+
+#health.low {
+    color: #ff0000;
+    animation: blink 0.5s infinite;
+}
+
+#health.medium {
+    color: #ffa500;
+}
+
+#steps {
+    color: #74b9ff;
+}
+
+#inventory-display {
+    color: #f1c40f;
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 10px;
+    border-radius: 8px;
+}
+
+#story-box {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    border-radius: 15px;
+    min-height: 140px;
+    margin: 18px 0;
+    border-left: 4px solid #f39c12;
+}
+
+#story-text {
+    color: #f0e6d3;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+#choices-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.choice-btn {
+    background: linear-gradient(135deg, #2d3436, #1a1a2e);
+    color: #dfe6e9;
+    border: 2px solid #6c5ce7;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-align: left;
+}
+
+.choice-btn::before {
+    content: '▶';
+    margin-right: 12px;
+    color: #6c5ce7;
+}
+
+.choice-btn:hover {
+    transform: translateX(8px);
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    border-color: #a29bfe;
+    color: white;
+}
+
+.choice-btn.danger { border-color: #e74c3c; }
+.choice-btn.danger:hover { background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #c0392b; }
+
+.choice-btn.success { border-color: #2ecc71; }
+.choice-btn.success:hover { background: linear-gradient(135deg, #2ecc71, #27ae60); border-color: #27ae60; }
+
+.choice-btn.magic { border-color: #9b59b6; }
+.choice-btn.magic:hover { background: linear-gradient(135deg, #9b59b6, #8e44ad); border-color: #8e44ad; }
+
+.choice-btn.warning { border-color: #f39c12; }
+.choice-btn.warning:hover { background: linear-gradient(135deg, #f39c12, #e67e22); border-color: #e67e22; }
+
+.choice-btn.legendary { border-color: #f1c40f; }
+.choice-btn.legendary:hover { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #1a1a2e; }
+
+#image-container {
+    text-align: center;
+    margin: 12px 0;
+}
+
+#scene-image {
+    max-width: 100%;
+    max-height: 220px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+footer {
+    text-align: center;
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+footer button {
+    background: linear-gradient(135deg, #e17055, #d63031);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+footer button:hover {
+    transform: scale(1.05);
+}
+
+footer button.secondary {
+    background: linear-gradient(135deg, #0984e3, #6c5ce7);
+}
+
+footer button.success {
+    background: linear-gradient(135deg, #00b894, #00a381);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@media (max-width: 600px) {
+    #game-container { padding: 15px; }
+    header h1 { font-size: 1.3rem; }
+    #status-bar { flex-direction: column; font-size: 0.8rem; }
+    .choice-btn { font-size: 0.85rem; padding: 10px 14px; }
+}

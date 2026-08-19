@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 1C - Montanha</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(155, 89, 182, 0.3); }
+        #story-box { border-left-color: #9b59b6; }
+        header h1 { color: #9b59b6; }
+        .pontuacao-topo {
+            background: rgba(0,0,0,0.4);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px auto;
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .legenda .boa { color: #2ecc71; }
+        .legenda .ruim { color: #e74c3c; }
+        .legenda .neutra { color: #f39c12; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>🏔️ Montanha Nevada</h1>
+            <div id="phase-indicator">📍 Decisão 1C</div>
+            <div class="pontuacao-topo">
+                ⭐ Pontos: <span id="pontos-display">0</span>
+            </div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="legenda">
+                <span class="boa">✅ Boa (+2 pts)</span>
+                <span class="neutra">⚖️ Neutra (0 pts)</span>
+                <span class="ruim">❌ Ruim (-2 pts)</span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">🏔️ A montanha é coberta de neve. O vento corta como facas. O que fazer?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn magic" onclick="escolher('2a')">🕯️ Explorar caverna </button>
+                <button class="choice-btn danger" onclick="escolher('2b')">🧗 Escalar o pico </button>
+                <button class="choice-btn success" onclick="escolher('2c')">⛺ Acampar e esperar </button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/x7nT5qK.jpg" alt="Montanha">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-1.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+
+        function escolher(opcao) {
+            addDecision('1c');
+            if (opcao === '2a') {
+                if (randomInt(1,2) === 1) {
+                    modifyHealth(15);
+                    addItem('Tesouro');
+                    addPontoBom();
+                } else {
+                    modifyHealth(-20);
+                    addPontoRuim();
+                }
+                window.location.href = 'decisao-2a.html';
+            } else if (opcao === '2b') {
+                const d = randomInt(10,30);
+                modifyHealth(-d);
+                if (hasItem('Capa Térmica')) modifyHealth(10);
+                addPontoNeutro();
+                window.location.href = 'decisao-2b.html';
+            } else {
+                modifyHealth(randomInt(10,25));
+                addPontoRuim();
+                window.location.href = 'decisao-2c.html';
+            }
+        }
+    </script>
+</body>
+</html>

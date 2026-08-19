@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ FINAL NEUTRO</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { 
+            border-color: rgba(241, 196, 15, 0.5); 
+            background: rgba(20, 20, 0, 0.95);
+        }
+        #story-box { 
+            border-left-color: #f39c12; 
+            border-width: 6px;
+            background: rgba(243, 156, 18, 0.1);
+        }
+        header h1 { 
+            color: #f39c12; 
+            text-shadow: 0 0 60px rgba(243,156,18,0.4);
+            font-size: 2.5rem;
+        }
+        #phase-indicator { color: #f39c12; }
+        #story-text { 
+            text-align: center; 
+            font-size: 1.2rem; 
+            line-height: 2;
+            color: #dfe6e9;
+        }
+        .final-box {
+            background: rgba(243, 156, 18, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+        }
+        .final-box .grande {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+        .final-box .titulo {
+            font-size: 1.3rem;
+            color: #f1c40f;
+            margin: 10px 0;
+        }
+        .simbolo { font-size: 4rem; text-align: center; }
+        .detalhes-final {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .detalhes-item {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .detalhes-item .num { font-size: 1.5rem; font-weight: bold; color: #f1c40f; }
+        .detalhes-item .label { color: #b2bec3; font-size: 0.8rem; }
+        .atributos-final {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .atributo-final {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .atributo-final.forca { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+        .atributo-final.magia { background: rgba(155, 89, 182, 0.3); color: #9b59b6; }
+        .atributo-final.diplomacia { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .btn-jogar {
+            background: linear-gradient(135deg, #f39c12, #e67e22) !important;
+        }
+        .estatisticas {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            color: #dfe6e9;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .estatisticas span { color: #f1c40f; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚖️ FINAL NEUTRO</h1>
+            <div id="phase-indicator">🛡️ SOBREVIVENTE - O REINO SOBREVIVEU, MAS FERIDO</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <div class="simbolo">⚖️</div>
+                <p id="story-text">🛡️ VOCÊ SOBREVIVEU, MAS O REINO SOFREU... 🛡️</p>
+                <div class="final-box">
+                    <div class="grande">🌅 O EQUILÍBRIO FOI QUEBRADO</div>
+                    <div class="titulo">🏚️ O REINO FOI FERIDO</div>
+                    <p style="color: #dfe6e9; font-size: 1.1rem; margin: 15px 0;">
+                        Você derrotou o dragão, mas não foi o suficiente para salvar todos.<br>
+                        Muitos perderam suas casas. O reino está ferido, mas ainda vivo.<br>
+                        <strong>⚖️ Sua jornada foi mediana. Você poderia ter feito melhor.</strong>
+                    </p>
+                    
+                    <div class="detalhes-final">
+                        <div class="detalhes-item">
+                            <div class="label">⭐ PONTUAÇÃO FINAL</div>
+                            <div class="num" id="pontuacaoFinal">0</div>
+                        </div>
+                        <div class="detalhes-item">
+                            <div class="label">✅ ESCOLHAS BOAS</div>
+                            <div class="num" id="escolhasBoas">0</div>
+                        </div>
+                        <div class="detalhes-item">
+                            <div class="label">❌ ESCOLHAS RUINS</div>
+                            <div class="num" id="escolhasRuins">0</div>
+                        </div>
+                    </div>
+
+                    <div class="atributos-final">
+                        <span class="atributo-final forca">⚔️ Força: <span id="forcaFinal">0</span></span>
+                        <span class="atributo-final magia">🔮 Magia: <span id="magiaFinal">0</span></span>
+                        <span class="atributo-final diplomacia">🤝 Diplomacia: <span id="diplomaciaFinal">0</span></span>
+                    </div>
+
+                    <div class="estatisticas">
+                        <strong>📊 SUA JORNADA:</strong><br>
+                        👣 Passos dados: <span id="passosFinal">0</span><br>
+                        🎒 Itens coletados: <span id="itensFinal">0</span><br>
+                        ⚖️ Escolhas Neutras: <span id="neutrasFinal">0</span><br>
+                        ❤️ Vida final: <span id="vidaFinal">0</span>
+                    </div>
+
+                    <div style="color: #f39c12; font-size: 1.1rem; margin-top: 10px;">
+                        📜 "O herói sobreviveu, mas o reino nunca mais foi o mesmo."
+                    </div>
+                </div>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn btn-jogar" onclick="resetGame()">🔄 Jogar Novamente</button>
+                <button class="choice-btn secondary" onclick="window.location.href='index.html'">🏠 Menu Principal</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/x7nT5qK.jpg" alt="Reino Ferido">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const s = getState();
+        document.getElementById('health').textContent = s.health;
+        document.getElementById('steps').textContent = s.steps;
+        document.getElementById('inventory-display').textContent = s.inventory.length > 0 ? s.inventory.join(' | ') : 'Vazio';
+        
+        document.getElementById('pontuacaoFinal').textContent = s.pontuacaoFinal || '?';
+        document.getElementById('escolhasBoas').textContent = s.escolhasBoas || 0;
+        document.getElementById('escolhasRuins').textContent = s.escolhasRuins || 0;
+        document.getElementById('neutrasFinal').textContent = s.escolhasNeutras || 0;
+        document.getElementById('forcaFinal').textContent = s.forca || 0;
+        document.getElementById('magiaFinal').textContent = s.magia || 0;
+        document.getElementById('diplomaciaFinal').textContent = s.diplomacia || 0;
+        document.getElementById('passosFinal').textContent = s.steps || 0;
+        document.getElementById('itensFinal').textContent = s.inventory.length || 0;
+        document.getElementById('vidaFinal').textContent = s.health || 0;
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 3A - Treinar</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(231, 76, 60, 0.3); }
+        #story-box { border-left-color: #e74c3c; }
+        header h1 { color: #e74c3c; }
+        .pontuacao-topo {
+            background: rgba(0,0,0,0.4);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px auto;
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        .legenda .boa { color: #2ecc71; }
+        .legenda .ruim { color: #e74c3c; }
+        .legenda .neutra { color: #f39c12; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>⚔️ Treino com Cavaleiros</h1>
+            <div id="phase-indicator">📍 Decisão 3A</div>
+            <div class="pontuacao-topo">
+                ⭐ Pontos: <span id="pontos-display">0</span>
+            </div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="legenda">
+                <span class="boa">✅ Boa (+2 pts)</span>
+                <span class="neutra">⚖️ Neutra (0 pts)</span>
+                <span class="ruim">❌ Ruim (-2 pts)</span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">⚔️ Você treina duro. Como continuar?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn danger" onclick="escolher('4a')">🔥 Ir para o dragão </button>
+                <button class="choice-btn success" onclick="escolher('4b')">🛡️ Procurar arma lendária </button>
+                <button class="choice-btn magic" onclick="escolher('4c')">🧙 Buscar mago </button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/7qWtHZj.jpg" alt="Treino">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-3.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+
+        function escolher(opcao) {
+            addDecision('3a');
+            if (opcao === '4a') {
+                addForca(10);
+                modifyHealth(-10);
+                addPontoBom();
+                window.location.href = 'decisao-4a.html';
+            } else if (opcao === '4b') {
+                addItem('Espada Lendária');
+                addForca(10);
+                addPontoNeutro();
+                window.location.href = 'decisao-4b.html';
+            } else {
+                addItem('Cristal Mágico');
+                addMagia(10);
+                addPontoRuim();
+                window.location.href = 'decisao-4c.html';
+            }
+        }
+    </script>
+</body>
+</html>

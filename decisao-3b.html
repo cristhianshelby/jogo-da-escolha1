@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão 3B - Biblioteca</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container { border-color: rgba(155, 89, 182, 0.3); }
+        #story-box { border-left-color: #9b59b6; }
+        header h1 { color: #9b59b6; }
+        .atributos {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            color: #dfe6e9;
+            font-size: 0.9rem;
+        }
+        .forca { color: #e74c3c; }
+        .magia { color: #9b59b6; }
+        .diplomacia { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>📚 Biblioteca Real</h1>
+            <div id="phase-indicator">📍 Decisão 3B</div>
+            <div id="status-bar">
+                <span>❤️ Vida: <span id="health">100</span></span>
+                <span>🛡️ Passos: <span id="steps">0</span></span>
+                <span>🎒 Itens: <span id="inventory-display">Vazio</span></span>
+            </div>
+            <div class="atributos">
+                <span class="forca">⚔️ Força: <span id="forcaDisplay">0</span></span>
+                <span class="magia">🔮 Magia: <span id="magiaDisplay">0</span></span>
+                <span class="diplomacia">🤝 Diplomacia: <span id="diplomaciaDisplay">0</span></span>
+            </div>
+        </header>
+        <main>
+            <div id="story-box">
+                <p id="story-text">📚 Você passa dias estudando na biblioteca. Descobre segredos antigos sobre o dragão."O dragão tem um ponto fraco!", você exclama.Mas o conhecimento vem com um preço. Você está exausto mentalmente.Qual caminho seguir agora?</p>
+            </div>
+            <div id="choices-box">
+                <button class="choice-btn magic" onclick="escolher('4a')">🔮 Usar magia contra o dragão (+Magia)</button>
+                <button class="choice-btn danger" onclick="escolher('4b')">⚔️ Enfrentar com estratégia</button>
+                <button class="choice-btn success" onclick="escolher('4c')">🤝 Negociar com o dragão</button>
+            </div>
+            <div id="image-container">
+                <img id="scene-image" src="https://i.imgur.com/mpYgRjD.jpg" alt="Biblioteca">
+            </div>
+        </main>
+        <footer>
+            <button onclick="goToMenu()" class="secondary">🏠 Menu</button>
+            <button onclick="window.location.href='decisao-3.html'" class="secondary">⬅️ Voltar</button>
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        updateUI();
+        const s = getState();
+        document.getElementById('forcaDisplay').textContent = s.forca || 0;
+        document.getElementById('magiaDisplay').textContent = s.magia || 0;
+        document.getElementById('diplomaciaDisplay').textContent = s.diplomacia || 0;
+
+        function escolher(opcao) {
+            addDecision('3b');
+            if (opcao === '4a') {
+                addMagia(15);
+                if (hasItem('Pergaminho') || hasItem('Livro de Feitiços')) {
+                    modifyHealth(15);
+                } else {
+                    modifyHealth(-10);
+                }
+                window.location.href = 'decisao-4a.html';
+            } else if (opcao === '4b') {
+                addItem('Estratégia de Batalha');
+                addForca(10);
+                modifyHealth(5);
+                window.location.href = 'decisao-4b.html';
+            } else {
+                addItem('Diplomacia');
+                addDiplomacia(15);
+                window.location.href = 'decisao-4c.html';
+            }
+        }
+    </script>
+</body>
+</html>
